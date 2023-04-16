@@ -1,0 +1,7 @@
+{
+	"name": "k8s-gitops-env Dockerfile",
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	}
+}
