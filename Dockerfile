@@ -48,6 +48,9 @@ RUN mkdir -p /src && \
     rm -fr /src
 RUN etcdctl version
 
-RUN pip3 install -r requirements.txt
+# Install python dependencies
+RUN mkdir /src
+COPY requirements.txt /src/requirements.txt
+RUN pip3 install -r /src/requirements.txt
 
 SHELL ["/bin/bash", "-c"]
