@@ -1,0 +1,14 @@
+aiohttp==3.8.4
+ansible==7.4.0
+cryptography==40.0.1
+hostdb==1.1.2
+paramiko==3.1.0
+pytest==7.2.2
+python-terraform==0.10.1
+pytoml==0.1.21
+PyYAML==6.0
+requests==2.28.2
+semantic-version==2.10.0
+typing-extensions==4.5.0
+urllib3==1.26.15
+yarl==1.8.2

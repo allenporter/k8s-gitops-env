@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "command": "docker build . -t k8s-gitops-env",
+            "label": "Docker Build",
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ]
+}
