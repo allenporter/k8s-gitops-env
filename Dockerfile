@@ -48,4 +48,6 @@ RUN mkdir -p /src && \
     rm -fr /src
 RUN etcdctl version
 
+RUN pip3 install -r requirements.txt
+
 SHELL ["/bin/bash", "-c"]

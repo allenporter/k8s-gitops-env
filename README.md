@@ -9,8 +9,8 @@ These are the tools, clis, or libraries used to operate on the cluster:
  - [X] etcdctl
  - [ ] ceph cli
  - [ ] terraform cli
- - [ ] ansible
- - [ ] hostdb (ansible inventory from terraform)
+ - [X] ansible
+ - [X] hostdb (ansible inventory from terraform)
  - [ ] fluxctl
  - [ ] kubectl
  - [ ] sops
