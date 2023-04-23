@@ -53,4 +53,7 @@ RUN mkdir /src
 COPY requirements.txt /src/requirements.txt
 RUN pip3 install -r /src/requirements.txt
 
+# Install inventory plugins
+COPY inventory-plugins/hostdb.py /root/.ansible/plugins/inventory/hostdb.py
+
 SHELL ["/bin/bash", "-c"]
