@@ -1,13 +1,13 @@
 
 FROM ubuntu:22.04
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update 
+RUN apt-get install -y \
         curl \
         unzip \
         software-properties-common \
+        vim \
         && \
-    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # This version must be supported by ppa:deadsnakes/ppa
@@ -36,6 +36,9 @@ RUN apt-get install -y \
 ENV PATH $PATH:/usr/lib/go-${GO_VERSION}/bin
 RUN go version
 
+# Cleanup from previous steps
+RUN apt-get clean
+
 # renovate: datasource=docker depName=python versioning=docker
 ARG ETCD_VERSION="v3.5.8"
 RUN mkdir -p /src && \
@@ -53,9 +56,6 @@ RUN mkdir /src
 COPY requirements.txt /src/requirements.txt
 RUN pip3 install -r /src/requirements.txt
 
-# Install inventory plugins
-COPY inventory-plugins/hostdb.py /root/.ansible/plugins/inventory/hostdb.py
-
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=kubernetes-api
 ARG KUBECTL_VERSION="v1.27.0"
 RUN cd /usr/local/bin/ && \
@@ -72,5 +72,19 @@ RUN mkdir -p /src && \
     cp terraform /usr/local/bin/terraform && \
     rm -fr /src
 RUN terraform version
+
+# renovate: datasource=github-releases depName=GoogleCloudPlatform/cloud-sdk-docker
+ARG GCLOUD_CLI_VERSION="427.0.0"
+RUN mkdir -p /usr/local/lib/ && \
+    cd /usr/local/lib/ && \
+    curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \
+    tar xf google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \
+    /usr/local/lib/google-cloud-sdk/install.sh --quiet --usage-reporting=false --rc-path=/etc/profile
+
+# Install inventory plugins and other startup items
+COPY root/ /root/
+
+# Ansible "unsupported locale setting"
+ENV LANG="C.UTF-8"
 
 SHELL ["/bin/bash", "-c"]
