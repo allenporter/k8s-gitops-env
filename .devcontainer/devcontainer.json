@@ -3,5 +3,9 @@
 	"build": {
 		"context": "..",
 		"dockerfile": "../Dockerfile"
-	}
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/Development/k8s-gitops,target=/workspaces/k8s-gitops,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/Development/homelab,target=/workspaces/homelab,type=bind,consistency=cached",
+	]
 }
