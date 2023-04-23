@@ -1,13 +1,13 @@
 
 FROM ubuntu:22.04
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update 
+RUN apt-get install -y \
         curl \
         unzip \
         software-properties-common \
+        vim \
         && \
-    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # This version must be supported by ppa:deadsnakes/ppa
@@ -35,6 +35,9 @@ RUN apt-get install -y \
     apt-get clean
 ENV PATH $PATH:/usr/lib/go-${GO_VERSION}/bin
 RUN go version
+
+# Cleanup from previous steps
+RUN apt-get clean
 
 # renovate: datasource=docker depName=python versioning=docker
 ARG ETCD_VERSION="v3.5.8"
@@ -77,11 +80,6 @@ RUN mkdir -p /usr/local/lib/ && \
     curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \
     tar xf google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \
     /usr/local/lib/google-cloud-sdk/install.sh --quiet --usage-reporting=false --rc-path=/etc/profile
-
-RUN apt-get install -y \
-        vim \
-        && \
-    apt-get clean
 
 # Install inventory plugins and other startup items
 COPY root/ /root/

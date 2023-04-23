@@ -8,8 +8,6 @@
 		"source=${localEnv:HOME}/Development/k8s-gitops,target=/workspaces/k8s-gitops,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/Development/homelab,target=/workspaces/homelab,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/.config/gcloud/application_default_credentials.json,target=/root/.config/gcloud/application_default_credentials.json,type=bind,consistency=cached"
-		"source=${localEnv:HOME}/.ssh,target=/root/.config/gcloud/application_default_credentials.json,type=bind,consistency=cached"
-
 	],
 	"containerEnv": {
 		"SERVICE_ACCOUNT_FILE": "/root/.config/gcloud/application_default_credentials.json",
