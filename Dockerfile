@@ -56,4 +56,21 @@ RUN pip3 install -r /src/requirements.txt
 # Install inventory plugins
 COPY inventory-plugins/hostdb.py /root/.ansible/plugins/inventory/hostdb.py
 
+# renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=kubernetes-api
+ARG KUBECTL_VERSION="v1.27.0"
+RUN cd /usr/local/bin/ && \
+    curl -OL https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+    chmod +x kubectl
+RUN kubectl version --client=true
+
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
+ARG TERRAFORM_VERSION="1.4.5"
+RUN mkdir -p /src && \
+    cd /src && \
+    curl -OL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    cp terraform /usr/local/bin/terraform && \
+    rm -fr /src
+RUN terraform version
+
 SHELL ["/bin/bash", "-c"]
