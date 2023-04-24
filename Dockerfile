@@ -14,7 +14,7 @@ RUN apt-get install -y \
 # binary for packages that can use it, but system installed python packages
 # like ceph CLI will use the default system python3.
 # renovate: datasource=docker depName=python versioning=docker
-ARG PYTHON_VERSION="3.11"
+ARG PYTHON_VERSION=3.11
 ARG DEBIAN_FRONTEND=noninteractive
 RUN add-apt-repository ppa:deadsnakes/ppa && \
         apt-get install -y \
@@ -28,7 +28,7 @@ RUN python${PYTHON_VERSION} --version
 #RUN update-alternatives --config python
 
 # Version supported by base image
-ARG GO_VERSION="1.18"
+ARG GO_VERSION=1.18
 RUN apt-get install -y \
         golang-${GO_VERSION} \
         git
@@ -43,7 +43,7 @@ RUN apt-get install -y ceph-common
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # renovate: datasource=docker depName=python versioning=docker
-ARG ETCD_VERSION="v3.5.8"
+ARG ETCD_VERSION=v3.5.8
 RUN mkdir -p /src && \
     cd /src && \
     curl -OL https://github.com/etcd-io/etcd/archive/refs/tags/${ETCD_VERSION}.zip && \
@@ -60,14 +60,14 @@ COPY requirements.txt /src/requirements.txt
 RUN pip3 install -r /src/requirements.txt
 
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=kubernetes-api
-ARG KUBECTL_VERSION="v1.27.0"
+ARG KUBECTL_VERSION=v1.27.0
 RUN cd /usr/local/bin/ && \
     curl -OL https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x kubectl
 RUN kubectl version --client=true
 
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-ARG TERRAFORM_VERSION="1.4.5"
+ARG TERRAFORM_VERSION=1.4.5
 RUN mkdir -p /src && \
     cd /src && \
     curl -OL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
@@ -77,7 +77,7 @@ RUN mkdir -p /src && \
 RUN terraform version
 
 # renovate: datasource=github-releases depName=GoogleCloudPlatform/cloud-sdk-docker
-ARG GCLOUD_CLI_VERSION="427.0.0"
+ARG GCLOUD_CLI_VERSION=427.0.0
 RUN mkdir -p /usr/local/lib/ && \
     cd /usr/local/lib/ && \
     curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \

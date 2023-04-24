@@ -9,4 +9,13 @@
   "pre-commit": {
     "enabled": true
   },
+  "regexManagers": [{
+      "fileMatch": [
+          "Dockerfile"
+      ],
+      "matchStrings": [
+          "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>.*?))?\\ARG .*?_VERSION=(?<currentValue>.*)"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+  }],
 }
