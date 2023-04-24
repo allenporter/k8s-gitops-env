@@ -42,7 +42,7 @@ RUN apt-get install -y ceph-common
 # Cleanup from previous steps
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# renovate: datasource=docker depName=python versioning=docker
+# renovate: datasource=github-releases depName=etcd-io/etcd
 ARG ETCD_VERSION=v3.5.8
 RUN mkdir -p /src && \
     cd /src && \
