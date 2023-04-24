@@ -67,7 +67,7 @@ RUN cd /usr/local/bin/ && \
 RUN kubectl version --client=true
 
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-ARG TERRAFORM_VERSION=1.4.5
+ARG TERRAFORM_VERSION=v1.27.1
 RUN mkdir -p /src && \
     cd /src && \
     curl -OL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
