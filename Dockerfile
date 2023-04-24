@@ -10,34 +10,37 @@ RUN apt-get install -y \
         && \
     rm -rf /var/lib/apt/lists/*
 
-# This version must be supported by ppa:deadsnakes/ppa
+# Version supported by ppa:deadsnakes/ppa. This is installed as an alternative
+# binary for packages that can use it, but system installed python packages
+# like ceph CLI will use the default system python3.
 # renovate: datasource=docker depName=python versioning=docker
 ARG PYTHON_VERSION="3.11"
 ARG DEBIAN_FRONTEND=noninteractive
 RUN add-apt-repository ppa:deadsnakes/ppa && \
         apt-get install -y \
         python${PYTHON_VERSION} \
-        python3-pip \
-        && \
-    apt-get clean
+        python3-pip
 RUN python3 --version
+RUN python${PYTHON_VERSION} --version
 
 # Update python3 alias to point at version installed
-RUN update-alternatives --install /usr/bin/python3 python /usr/bin/python${PYTHON_VERSION} 1
-RUN update-alternatives --config python
+#RUN update-alternatives --install /usr/bin/python3 python /usr/bin/python${PYTHON_VERSION} 1
+#RUN update-alternatives --config python
 
 # Version supported by base image
 ARG GO_VERSION="1.18"
 RUN apt-get install -y \
         golang-${GO_VERSION} \
-        git \
-        && \
-    apt-get clean
+        git
 ENV PATH $PATH:/usr/lib/go-${GO_VERSION}/bin
 RUN go version
 
+# Ceph quincy versions upported by base ubuntu image
+RUN apt-get install -y ceph-common
+#RUN ceph version
+
 # Cleanup from previous steps
-RUN apt-get clean
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # renovate: datasource=docker depName=python versioning=docker
 ARG ETCD_VERSION="v3.5.8"

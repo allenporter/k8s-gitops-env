@@ -7,7 +7,9 @@
 	"mounts": [
 		"source=${localEnv:HOME}/Development/k8s-gitops,target=/workspaces/k8s-gitops,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/Development/homelab,target=/workspaces/homelab,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.config/gcloud/application_default_credentials.json,target=/root/.config/gcloud/application_default_credentials.json,type=bind,consistency=cached"
+		"source=${localWorkspaceFolder}/.env/gcloud-service-account.json,target=/root/.config/gcloud/application_default_credentials.json,type=bind,consistency=cached",
+		"source=${localWorkspaceFolder}/.env/ceph.conf,target=/etc/ceph/ceph.conf,type=bind,consistency=cached",
+		"source=${localWorkspaceFolder}/.env/ceph.keyring,target=/etc/ceph/ceph.keyring,type=bind,consistency=cached",
 	],
 	"containerEnv": {
 		"SERVICE_ACCOUNT_FILE": "/root/.config/gcloud/application_default_credentials.json",
