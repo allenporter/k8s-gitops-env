@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "regexManagers:dockerfileVersions",
+    "schedule:weekends",
   ],
   "timezone": "America/Los_Angeles",
   "assignees": ["allenporter"],
@@ -9,13 +11,4 @@
   "pre-commit": {
     "enabled": true
   },
-  "regexManagers": [{
-      "fileMatch": [
-          "Dockerfile"
-      ],
-      "matchStrings": [
-          "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>.*?))?\\ARG .*?_VERSION=(?<currentValue>.*)"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-  }],
 }
