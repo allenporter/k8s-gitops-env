@@ -66,7 +66,7 @@ RUN cd /usr/local/bin/ && \
     chmod +x kubectl
 RUN kubectl version --client=true
 
-# renovate: datasource=github-releases depName=kubernetes/kubernetes
+# renovate: datasource=github-releases depName=hashicorp/terraform
 ARG TERRAFORM_VERSION=1.4.5
 RUN mkdir -p /src && \
     cd /src && \
