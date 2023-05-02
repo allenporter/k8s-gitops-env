@@ -47,3 +47,14 @@ $ sudo ceph auth get-or-create client.admin
 [client.admin]
 	key = ....
 ```
+
+## Kubernetes Client
+
+To speak to kubernetes, you need a configuration file like `/etc/kubernetes/admin.conf` from
+an existing cluster. [Organizing Cluster Access Using kubeconfig Files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) has more details.
+
+TODO: Automate this step when combining with the git repo:
+```
+$ scp kapi01.prod:/etc/kubernetes/admin.conf .env/kapi01.prod.config
+$ scp kapi01.dev:/etc/kubernetes/admin.conf .env/kapi01.dev.config
+```
