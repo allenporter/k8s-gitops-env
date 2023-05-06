@@ -1,12 +1,13 @@
 
-FROM ubuntu:22.04
+FROM ubuntu:jammy-20230308
 
-RUN apt-get update 
-RUN apt-get install -y \
+RUN apt-get update --fix-missing
+RUN apt-get install -y --fix-missing \
         curl \
         unzip \
         software-properties-common \
         vim \
+        bind9-dnsutils \
         && \
     rm -rf /var/lib/apt/lists/*
 

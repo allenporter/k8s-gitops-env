@@ -8,21 +8,15 @@
 		"source=${localEnv:HOME}/Development/k8s-gitops,target=/workspaces/k8s-gitops,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/Development/homelab,target=/workspaces/homelab,type=bind,consistency=cached",
 		"source=${localWorkspaceFolder}/.env/,target=/root/.env/,type=bind,consistency=cached",
-		"source=${localWorkspaceFolder}/.env/ceph.conf,target=/etc/ceph/ceph.conf,type=bind,consistency=cached",
-		"source=${localWorkspaceFolder}/.env/ceph.keyring,target=/etc/ceph/ceph.keyring,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/Development/k8s-gitops/scripts/bashrc,target=/root/.bashrc,type=bind,consistency=cached",
 	],
 	"containerEnv": {
+		"CEPH_CONF": "/root/.env/ceph.conf",
+		"CEPH_ARGS": "--keyring=/root/.env/ceph.keyring",
 		"GOOGLE_APPLICATION_CREDENTIALS": "/root/.env/gcloud-service-account.json",
-
-		// Prod environment
-		"PROD_KUBECONFIG": "/root/.env/kapi01.prod.config",
-		"PROD_ETCDCTL_ENDPOINTS": "cfg01.prod:2379,cfg02.prod:2379,cfg03.prod:2379",
-		"PROD_ANSIBLE_INVENTORY": "/workspaces/homelab/hosts/prod/inventory.yaml",
-
-		// Dev environment
-		"DEV_UBECONFIG": "/root/.env/kapi01.dev.config",
-		"DEV_ETCDCTL_ENDPOINTS": "cfg01.dev:2379",
-		"DEV_ANSIBLE_INVENTORY": "/workspaces/homelab/hosts/dev/inventory.yaml",
+		"ANSIBLE_ROLES_PATH": "/workspaces/k8s-gitops/roles/",
+		// Used to set up ansible inventory prefixes based on prod/dev environment
+		"ENV_INVENTORY_ROOT": "/workspaces/homelab/hosts"
 	},
 	"runArgs": [
 		"--dns-search=mrv.thebends.org"
