@@ -85,8 +85,50 @@ RUN mkdir -p /usr/local/lib/ && \
     tar xf google-cloud-cli-${GCLOUD_CLI_VERSION}-linux-x86_64.tar.gz && \
     /usr/local/lib/google-cloud-sdk/install.sh --quiet --usage-reporting=false --rc-path=/etc/profile
 
+# renovate: datasource=github-releases depName=helm/helm
+ARG HELM_CLI_VERSION=v3.11.3
+RUN mkdir -p /src && \
+    cd /src && \
+    curl -OL https://get.helm.sh/helm-${HELM_CLI_VERSION}-linux-amd64.tar.gz && \
+    tar xf helm-${HELM_CLI_VERSION}-linux-amd64.tar.gz && \
+    cp linux-amd64/helm /usr/local/bin/helm && \
+    rm -fr /src
+RUN helm version
+
+# renovate: datasource=github-releases depName=fluxcd/flux2
+ARG FLUX_CLI_VERSION=0.41.2
+RUN mkdir -p /src && \
+    cd /src && \
+    curl -OL https://github.com/fluxcd/flux2/releases/download/v${FLUX_CLI_VERSION}/flux_${FLUX_CLI_VERSION}_linux_arm64.tar.gz && \
+    tar xf flux_${FLUX_CLI_VERSION}_linux_arm64.tar.gz && \
+    cp flux /usr/local/bin/flux && \
+    rm -fr /src
+RUN flux version --client
+
+#
+# renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+ARG KUSTOMIZE_VERSION=v5.0.3
+RUN cd /usr/local/bin/ && \
+    curl -OL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_arm64.tar.gz && \
+    tar xf kustomize_${KUSTOMIZE_VERSION}_linux_arm64.tar.gz && \
+    chmod +x kustomize
+RUN kustomize version
+
+# Setup non-root user
+ARG USERNAME=admin
+ARG GROUPNAME=admin
+RUN addgroup --system ${GROUPNAME} && \
+    adduser --system ${GROUPNAME} --ingroup ${USERNAME} --home /home/${USERNAME} --shell /bin/bash && \
+    chown -R ${USERNAME}:${GROUPNAME} /home/${USERNAME} && \
+    apt-get update && \
+    apt-get install -y sudo && \
+    echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
+    chmod 0440 /etc/sudoers.d/${USERNAME}
+ 
+USER admin
+
 # Install inventory plugins and other startup items
-COPY root/ /root/
+COPY --chown=admin:admin home/ /home/admin/
 
 # Ansible "unsupported locale setting"
 ENV LANG="C.UTF-8"

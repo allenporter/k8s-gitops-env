@@ -11,7 +11,7 @@ These are the tools, clis, or libraries used to operate on the cluster:
  - [X] terraform cli
  - [X] ansible
  - [X] hostdb (ansible inventory from terraform)
- - [ ] fluxctl
+ - [X] fluxctl
  - [X] kubectl
  - [ ] sops
 

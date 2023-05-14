@@ -7,13 +7,14 @@
 	"mounts": [
 		"source=${localEnv:HOME}/Development/k8s-gitops,target=/workspaces/k8s-gitops,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/Development/homelab,target=/workspaces/homelab,type=bind,consistency=cached",
-		"source=${localWorkspaceFolder}/.env/,target=/root/.env/,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/Development/k8s-gitops/scripts/bashrc,target=/root/.bashrc,type=bind,consistency=cached",
+		"source=${localWorkspaceFolder}/.env/,target=/home/admin/.env/,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/Development/k8s-gitops/scripts/bashrc,target=/home/admin/.bashrc,type=bind,consistency=cached",
 	],
+	"remoteUser": "admin",
 	"containerEnv": {
-		"CEPH_CONF": "/root/.env/ceph.conf",
-		"CEPH_ARGS": "--keyring=/root/.env/ceph.keyring",
-		"GOOGLE_APPLICATION_CREDENTIALS": "/root/.env/gcloud-service-account.json",
+		"CEPH_CONF": "/home/admin/.env/ceph.conf",
+		"CEPH_ARGS": "--keyring=/home/admin/.env/ceph.keyring",
+		"GOOGLE_APPLICATION_CREDENTIALS": "/home/admin/.env/gcloud-service-account.json",
 		"ANSIBLE_ROLES_PATH": "/workspaces/k8s-gitops/roles/",
 		// Used to set up ansible inventory prefixes based on prod/dev environment
 		"ENV_INVENTORY_ROOT": "/workspaces/homelab/hosts"
