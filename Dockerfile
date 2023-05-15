@@ -109,8 +109,8 @@ RUN flux version --client
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=v5.0.3
 RUN cd /usr/local/bin/ && \
-    curl -OL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_arm64.tar.gz && \
-    tar xf kustomize_${KUSTOMIZE_VERSION}_linux_arm64.tar.gz && \
+    curl -OL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
+    tar xf kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
     chmod +x kustomize
 RUN kustomize version
 
