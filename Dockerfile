@@ -99,8 +99,8 @@ RUN helm version
 ARG FLUX_CLI_VERSION=0.41.2
 RUN mkdir -p /src && \
     cd /src && \
-    curl -OL https://github.com/fluxcd/flux2/releases/download/v${FLUX_CLI_VERSION}/flux_${FLUX_CLI_VERSION}_linux_arm64.tar.gz && \
-    tar xf flux_${FLUX_CLI_VERSION}_linux_arm64.tar.gz && \
+    curl -OL https://github.com/fluxcd/flux2/releases/download/v${FLUX_CLI_VERSION}/flux_${FLUX_CLI_VERSION}_linux_amd64.tar.gz && \
+    tar xf flux_${FLUX_CLI_VERSION}_linux_amd64.tar.gz && \
     cp flux /usr/local/bin/flux && \
     rm -fr /src
 RUN flux version --client
