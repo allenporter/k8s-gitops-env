@@ -38,7 +38,7 @@ RUN go version
 
 # Ceph quincy versions upported by base ubuntu image
 RUN apt-get install -y ceph-common
-#RUN ceph version
+RUN ceph --version
 
 # Cleanup from previous steps
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -113,6 +113,14 @@ RUN cd /usr/local/bin/ && \
     tar xf kustomize_${KUSTOMIZE_VERSION}_linux_arm64.tar.gz && \
     chmod +x kustomize
 RUN kustomize version
+
+# renovate: datasource=github-releases depName=stedolan/jq
+ARG JQ_VERSION=1.6
+RUN cd /usr/local/bin/ && \
+    curl -OL https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 && \
+    mv jq-linux64 jq && \
+    chmod +x jq
+RUN jq --version
 
 # Setup non-root user
 ARG USERNAME=admin
