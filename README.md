@@ -11,7 +11,7 @@ These are the tools, clis, or libraries used to operate on the cluster:
  - [X] terraform cli
  - [X] ansible
  - [X] hostdb (ansible inventory from terraform)
- - [ ] fluxctl
+ - [X] fluxctl
  - [X] kubectl
  - [ ] sops
 
@@ -47,3 +47,10 @@ $ sudo ceph auth get-or-create client.admin
 [client.admin]
 	key = ....
 ```
+
+## Kubernetes Client
+
+To speak to kubernetes, you need a configuration file like `/etc/kubernetes/admin.conf` from
+an existing cluster. [Organizing Cluster Access Using kubeconfig Files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) has more details.
+
+See setup in https://github.com/allenporter/k8s-gitops/blob/main/scripts/README.md#bootstrapping-the-environment
