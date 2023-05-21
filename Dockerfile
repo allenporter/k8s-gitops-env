@@ -1,33 +1,16 @@
 
 FROM ubuntu:jammy-20230308
 
-RUN apt-get update --fix-missing
+RUN apt-get update --fix-missing && apt-get upgrade -y
 RUN apt-get install -y --fix-missing \
         curl \
         unzip \
         software-properties-common \
         vim \
         bind9-dnsutils \
-        && \
-    rm -rf /var/lib/apt/lists/*
-
-# Version supported by ppa:deadsnakes/ppa. This is installed as an alternative
-# binary for packages that can use it, but system installed python packages
-# like ceph CLI will use the default system python3.
-# renovate: datasource=docker depName=python versioning=docker
-ARG PYTHON_VERSION=3.11
-ARG DEBIAN_FRONTEND=noninteractive
-RUN add-apt-repository ppa:deadsnakes/ppa && \
-        apt-get install -y \
-        python${PYTHON_VERSION} \
         python3-pip
-RUN python3 --version
-RUN python${PYTHON_VERSION} --version
 
-# Update python3 alias to point at version installed
-#RUN update-alternatives --install /usr/bin/python3 python /usr/bin/python${PYTHON_VERSION} 1
-#RUN update-alternatives --config python
-
+RUN add-apt-repository ppa:deadsnakes/ppa
 # Version supported by base image
 ARG GO_VERSION=1.18
 RUN apt-get install -y \
@@ -40,9 +23,6 @@ RUN go version
 RUN apt-get install -y ceph-common
 RUN ceph --version
 
-# Cleanup from previous steps
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # renovate: datasource=github-releases depName=etcd-io/etcd
 ARG ETCD_VERSION=v3.5.9
 RUN mkdir -p /src && \
@@ -54,11 +34,6 @@ RUN mkdir -p /src && \
     cp bin/etcdctl /usr/local/bin/etcdctl && \
     rm -fr /src
 RUN etcdctl version
-
-# Install python dependencies
-RUN mkdir /src
-COPY requirements.txt /src/requirements.txt
-RUN pip3 install -r /src/requirements.txt
 
 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=kubernetes-api
 ARG KUBECTL_VERSION=v1.27.0
@@ -105,7 +80,6 @@ RUN mkdir -p /src && \
     rm -fr /src
 RUN flux version --client
 
-#
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=v5.0.3
 RUN cd /usr/local/bin/ && \
@@ -121,6 +95,12 @@ RUN cd /usr/local/bin/ && \
     mv jq-linux64 jq && \
     chmod +x jq
 RUN jq --version
+
+# Cleanup from previous steps
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt /src/requirements.txt
+RUN pip3 install -r /src/requirements.txt
 
 # Setup non-root user
 ARG USERNAME=admin

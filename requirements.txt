@@ -15,3 +15,5 @@ typing-extensions==4.5.0
 urllib3==1.26.15
 yarl==1.9.2
 google-cloud-secret-manager==2.16.1
+PyJWT==2.7.0
+dnspython==2.3.0
