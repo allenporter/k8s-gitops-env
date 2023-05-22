@@ -43,11 +43,11 @@ RUN cd /usr/local/bin/ && \
 RUN kubectl version --client=true
 
 # renovate: datasource=github-releases depName=hashicorp/terraform
-ARG TERRAFORM_VERSION=1.4.5
+ARG TERRAFORM_VERSION=v1.4.5
 RUN mkdir -p /src && \
     cd /src && \
-    curl -OL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    curl -OL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION/v}/terraform_${TERRAFORM_VERSION/v}_linux_amd64.zip && \
+    unzip terraform_${TERRAFORM_VERSION/v}_linux_amd64.zip && \
     cp terraform /usr/local/bin/terraform && \
     rm -fr /src
 RUN terraform version
