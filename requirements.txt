@@ -9,7 +9,7 @@ pytest==7.3.1
 python-terraform==0.10.1
 pytoml==0.1.21
 PyYAML==6.0
-requests==2.30.0
+requests==2.31.0
 semantic-version==2.10.0
 typing-extensions==4.5.0
 urllib3==1.26.15
