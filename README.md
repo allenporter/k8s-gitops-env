@@ -22,7 +22,7 @@ be able to operate on the cluster:
  - [X] gcloud auth: Terraform state, secret management?
  - [X] proxmox password
  - [X] ssh keys
- - [ ] kubernetes client certs
+ - [X] kubernetes client certs
  - [X] ansible inventory
  - [ ] sops keys
 
