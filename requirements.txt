@@ -11,7 +11,7 @@ pytoml==0.1.21
 PyYAML==6.0
 requests==2.31.0
 semantic-version==2.10.0
-typing-extensions==4.5.0
+typing-extensions==4.6.3
 urllib3==2.0.2
 yarl==1.9.2
 google-cloud-secret-manager==2.16.1
