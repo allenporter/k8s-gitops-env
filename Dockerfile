@@ -1,8 +1,9 @@
 
 FROM ubuntu:jammy-20230308
 
-RUN apt-get update --fix-missing && apt-get upgrade -y
-RUN apt-get install -y --fix-missing \
+RUN apt-get update --fix-missing && \
+    apt-get upgrade -y && \
+    apt-get install -y --fix-missing \
         curl \
         unzip \
         software-properties-common \
@@ -10,7 +11,6 @@ RUN apt-get install -y --fix-missing \
         bind9-dnsutils \
         python3-pip
 
-RUN add-apt-repository ppa:deadsnakes/ppa
 # Version supported by base image
 ARG GO_VERSION=1.18
 RUN apt-get install -y \
