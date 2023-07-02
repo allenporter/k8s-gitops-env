@@ -9,7 +9,8 @@ RUN apt-get update --fix-missing && \
         software-properties-common \
         vim \
         bind9-dnsutils \
-        python3-pip
+        python3-pip \
+        sshpass
 
 # Version supported by base image
 ARG GO_VERSION=1.18
